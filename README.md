@@ -1,7 +1,7 @@
-# Smart Daily Expense Tracker Module
+# FlowBook - Smart Daily Expense Tracker
 
 ## 🎯 Overview
-A comprehensive expense tracking module built with Jetpack Compose, following MVVM architecture with Room database for local storage. This module helps small business owners track their daily expenses efficiently.
+A comprehensive expense tracking app built with Jetpack Compose, following MVVM architecture with Room database for local storage. This app helps small business owners track their daily expenses efficiently with real-time data, auto-navigation, and smart reporting features.
 
 ## ✨ Features
 
@@ -14,10 +14,13 @@ A comprehensive expense tracking module built with Jetpack Compose, following MV
 ### 🛠️ Core Functionality
 - ✅ Add expenses with title, amount, category, and notes
 - ✅ Real-time validation and error handling
-- ✅ Category-based organization (Staff, Travel, Food, Utility)
+- ✅ Category-based organization (Staff, Travel, Food, Utility, Other)
 - ✅ Date-based filtering and grouping
 - ✅ Expense analytics and reporting
 - ✅ Export functionality (PDF/CSV with real data)
+- ✅ Auto-navigation after expense addition
+- ✅ Dashboard auto-refresh with latest data
+- ✅ Smart reporting (recent expenses on top, no zero-expense days)
 - ✅ Dark/Light theme support
 - ✅ Smooth animations and transitions
 
@@ -41,17 +44,24 @@ A comprehensive expense tracking module built with Jetpack Compose, following MV
 - Android Studio Arctic Fox or later
 - Kotlin 1.8+
 - Compose BOM 2024.09.00
+- Android SDK 24+ (Android 7.0+)
 
 ### Installation
-1. The module is already integrated into the main app
-2. All dependencies are configured in `gradle/libs.versions.toml`
-3. Database is automatically initialized on first app launch
+1. Clone the repository
+2. Open in Android Studio
+3. Sync project with Gradle files
+4. Run on emulator or device
 
 ### Usage
-1. Launch the app to see the dashboard
-2. Tap "Add Expense" to create new expense entries
-3. Use "View Expenses" to see all expenses with filtering options
-4. Access "Reports" for analytics and export features
+1. **Launch the app** to see the dashboard
+2. **Add Expense** - Tap "Add Expense" to create new entries
+   - Fill in title, amount, category, and optional notes
+   - App automatically navigates back after successful addition
+3. **View Expenses** - See all expenses with filtering and grouping options
+4. **Reports** - Access analytics with smart reporting features
+   - Recent expenses shown first
+   - Zero-expense days are filtered out
+   - Export to PDF/CSV with real data
 
 ## 🎨 UI Components
 
@@ -115,12 +125,40 @@ data class Expense(
 - Budget tracking and alerts
 - Multi-currency support
 - Expense templates and recurring expenses
+- Data backup and restore
+- Expense sharing and collaboration
+
+## 🛠️ Development
+
+### Project Structure
+```
+app/src/main/java/com/example/flowbook/
+├── data/
+│   ├── model/          # Data models (Expense, ExpenseCategory)
+│   ├── database/       # Room database setup
+│   └── repository/     # Data access layer
+├── ui/
+│   ├── screens/        # Main UI screens
+│   ├── components/     # Reusable UI components
+│   ├── viewmodel/      # ViewModels for each screen
+│   ├── animations/     # Custom animations
+│   └── theme/          # App theming
+└── navigation/         # Navigation setup
+```
+
+### Key Features Implemented
+- ✅ **Real Data Only**: No mock data, everything from Room database
+- ✅ **Auto-Navigation**: Seamless flow after expense addition
+- ✅ **Smart Reporting**: Recent expenses first, filtered zero-days
+- ✅ **Live Updates**: Dashboard refreshes with latest data
+- ✅ **Export Functions**: PDF/CSV with actual expense data
 
 ## 🤝 Contributing
 1. Follow the existing code style and architecture
 2. Add tests for new features
 3. Update documentation as needed
 4. Ensure all linting rules pass
+5. Test on multiple screen sizes
 
 ## 📄 License
-This module is part of the FlowBook application and follows the same licensing terms.
+This project is part of the FlowBook application and follows the same licensing terms.
