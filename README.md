@@ -99,11 +99,6 @@ This project was developed with extensive assistance from AI tools to accelerate
         <br><b>Expense List</b>
         <br><small>Gradient cards & animations</small>
       </td>
-      <td align="center">
-        <img src="screenshots/app_icon.png" width="200" alt="App Icon"/>
-        <br><b>App Icon</b>
-        <br><small>Custom gradient design</small>
-      </td>
     </tr>
   </table>
 </div>
