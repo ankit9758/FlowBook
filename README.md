@@ -93,9 +93,6 @@ This project was developed with extensive assistance from AI tools to accelerate
 ![Expense List](screenshots/expense_list.png)
 *Beautiful gradient cards with staggered animations, category-specific colors, and smooth transitions*
 
-### App Icon
-![App Icon](screenshots/app_icon.png)
-*Custom gradient app icon with expense tracking design, perfectly matching the app's theme*
 
 ## Technical Stack
 
