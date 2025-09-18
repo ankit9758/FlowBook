@@ -9,22 +9,39 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Green80,
-    secondary = GreenGrey80,
-    tertiary = Teal80,
-    primaryContainer = Green40.copy(alpha = 0.3f),
-    secondaryContainer = GreenGrey40.copy(alpha = 0.3f)
+    primary = Purple80,
+    secondary = PurpleGrey80,
+    tertiary = Blue80,
+    primaryContainer = Purple40.copy(alpha = 0.3f),
+    secondaryContainer = PurpleGrey40.copy(alpha = 0.3f),
+    surface = Color(0xFF1A1A1A),
+    surfaceVariant = Color(0xFF2D2D2D),
+    onSurface = Color(0xFFE0E0E0),
+    onSurfaceVariant = Color(0xFFB0B0B0),
+    error = ExpenseRed,
+    onError = Color.White,
+    errorContainer = ExpenseRed.copy(alpha = 0.1f),
+    onErrorContainer = ExpenseRed
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Green40,
-    secondary = GreenGrey40,
-    tertiary = Teal40,
-    primaryContainer = Green40.copy(alpha = 0.1f),
-    secondaryContainer = GreenGrey40.copy(alpha = 0.1f)
+    primary = Purple40,
+    secondary = PurpleGrey40,
+    tertiary = Blue40,
+    primaryContainer = Purple40.copy(alpha = 0.1f),
+    secondaryContainer = PurpleGrey40.copy(alpha = 0.1f),
+    surface = Color(0xFFFFFBFE),
+    surfaceVariant = Color(0xFFF3F0F4),
+    onSurface = Color(0xFF1C1B1F),
+    onSurfaceVariant = Color(0xFF49454F),
+    error = ExpenseRed,
+    onError = Color.White,
+    errorContainer = ExpenseRed.copy(alpha = 0.1f),
+    onErrorContainer = ExpenseRed
 )
 
 @Composable

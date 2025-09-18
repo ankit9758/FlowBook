@@ -36,6 +36,9 @@ fun ExpenseNavigation(navController: NavHostController) {
                 },
                 onNavigateToReports = {
                     navController.navigate("expense_report")
+                },
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }

@@ -44,6 +44,9 @@ class ExpenseListViewModel(
             _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
             
             try {
+                // Add a small delay to show the loading animation
+                kotlinx.coroutines.delay(800)
+                
                 val currentState = _uiState.value
                 val expenses = if (currentState.selectedCategory != null) {
                     expenseRepository.getExpensesByCategory(currentState.selectedCategory)
@@ -108,7 +111,7 @@ class ExpenseListViewModel(
             expenses.groupBy { it.category.displayName }
         } else {
             expenses.groupBy { 
-                SimpleDateFormat("HH:mm", Locale.getDefault()).format(it.createdAt)
+                SimpleDateFormat("dd MMM YYYY HH:mm a", Locale.getDefault()).format(it.createdAt)
             }
         }
     }

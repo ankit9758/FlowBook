@@ -1,10 +1,13 @@
 package com.example.flowbook.ui.screens
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Info
@@ -12,10 +15,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.delay
 import com.example.flowbook.data.database.ExpenseDatabase
 import com.example.flowbook.data.repository.ExpenseRepository
 import com.example.flowbook.data.model.ExpenseCategory
@@ -30,6 +35,7 @@ import java.util.*
 fun ExpenseListScreen(
     onNavigateToAddExpense: () -> Unit,
     onNavigateToReports: () -> Unit,
+    onNavigateBack: () -> Unit,
     viewModel: ExpenseListViewModel? = null
 ) {
     val context = LocalContext.current
@@ -52,6 +58,11 @@ fun ExpenseListScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Expenses") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
                 actions = {
                     IconButton(onClick = { showFilterDialog = true }) {
                         Icon(Icons.Default.Search, contentDescription = "Filter")
@@ -64,7 +75,8 @@ fun ExpenseListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onNavigateToAddExpense
+                onClick = onNavigateToAddExpense,
+                containerColor = MaterialTheme.colorScheme.primary
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Expense")
             }
@@ -106,12 +118,9 @@ fun ExpenseListScreen(
 
             // Expenses List
             if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                AnimatedLoadingState(
+                    modifier = Modifier.fillMaxSize()
+                )
             } else if (uiState.expenses.isEmpty()) {
                 EmptyState(
                     onAddExpense = onNavigateToAddExpense,
@@ -120,29 +129,10 @@ fun ExpenseListScreen(
             } else {
                 val groupedExpenses = expenseViewModel.getGroupedExpenses()
                 
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    groupedExpenses.forEach { (groupKey, expenses) ->
-                        item {
-                            Text(
-                                text = groupKey,
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(vertical = 8.dp)
-                            )
-                        }
-                        
-                        items(expenses) { expense ->
-                            ExpenseCard(
-                                expense = expense,
-                                onDelete = { expenseViewModel.deleteExpense(expense) }
-                            )
-                        }
-                    }
-                }
+                AnimatedExpenseList(
+                    groupedExpenses = groupedExpenses,
+                    onDeleteExpense = { expenseViewModel.deleteExpense(it) }
+                )
             }
         }
     }
@@ -244,4 +234,148 @@ private fun FilterDialog(
             }
         }
     )
+}
+
+@Composable
+private fun AnimatedLoadingState(
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "loading")
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "rotation"
+    )
+    
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.8f,
+        targetValue = 1.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(800, easing = EaseInOut),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "scale"
+    )
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(48.dp)
+                    .alpha(0.8f),
+                color = MaterialTheme.colorScheme.primary,
+                strokeWidth = 4.dp
+            )
+            
+            Text(
+                text = "Loading expenses...",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun AnimatedExpenseList(
+    groupedExpenses: Map<String, List<com.example.flowbook.data.model.Expense>>,
+    onDeleteExpense: (com.example.flowbook.data.model.Expense) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        groupedExpenses.forEach { (groupKey, expenses) ->
+            item {
+                AnimatedVisibility(
+                    visible = true,
+                    enter = slideInVertically(
+                        initialOffsetY = { -it },
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow
+                        )
+                    ) + fadeIn(
+                        animationSpec = tween(300)
+                    )
+                ) {
+                    Text(
+                        text = groupKey,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+            }
+            
+            itemsIndexed(
+                items = expenses,
+                key = { _, expense -> expense.id }
+            ) { index, expense ->
+                AnimatedExpenseCard(
+                    expense = expense,
+                    onDelete = { onDeleteExpense(expense) },
+                    index = index
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AnimatedExpenseCard(
+    expense: com.example.flowbook.data.model.Expense,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier,
+    index: Int = 0
+) {
+    var isVisible by remember { mutableStateOf(false) }
+    
+    // Staggered animation delay based on index
+    val delay = (index * 100).coerceAtMost(500)
+    
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(delay.toLong())
+        isVisible = true
+    }
+    
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(
+            initialOffsetY = { it },
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        ) + fadeIn(
+            animationSpec = tween(400)
+        ),
+        exit = slideOutVertically(
+            targetOffsetY = { -it },
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioHighBouncy,
+                stiffness = Spring.StiffnessHigh
+            )
+        ) + fadeOut(
+            animationSpec = tween(200)
+        ),
+        modifier = modifier
+    ) {
+        ExpenseCard(
+            expense = expense,
+            onDelete = onDelete
+        )
+    }
 }

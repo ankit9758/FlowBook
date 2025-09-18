@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -81,7 +82,11 @@ fun ExpenseEntryScreen(
                 label = { Text("Title") },
                 placeholder = { Text("Enter expense title") },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                
             )
 
             // Amount Input
@@ -104,7 +109,7 @@ fun ExpenseEntryScreen(
                 onValueChange = expenseViewModel::updateNotes,
                 label = { Text("Notes (Optional)") },
                 placeholder = { Text("Add any additional notes...") },
-                maxLines = 3,
+                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
