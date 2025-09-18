@@ -81,21 +81,38 @@ This project was developed with extensive assistance from AI tools to accelerate
 
 ## Screenshots
 
-### Dashboard Screen
-![Dashboard](screenshots/dashboard.png)
-*Main dashboard with today's summary and quick action cards featuring the beautiful purple-blue gradient theme*
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="screenshots/dashboard.png" width="200" alt="Dashboard"/>
+        <br><b>Dashboard</b>
+        <br><small>Main dashboard with gradient theme</small>
+      </td>
+      <td align="center">
+        <img src="screenshots/add_expense.png" width="200" alt="Add Expense"/>
+        <br><b>Add Expense</b>
+        <br><small>Gradient button & form</small>
+      </td>
+      <td align="center">
+        <img src="screenshots/expense_list.png" width="200" alt="Expense List"/>
+        <br><b>Expense List</b>
+        <br><small>Gradient cards & animations</small>
+      </td>
+      <td align="center">
+        <img src="screenshots/app_icon.png" width="200" alt="App Icon"/>
+        <br><b>App Icon</b>
+        <br><small>Custom gradient design</small>
+      </td>
+    </tr>
+  </table>
+</div>
 
-### Add Expense Screen
-![Add Expense](screenshots/add_expense.png)
-*Expense entry form with gradient button, category selection, and modern Material Design 3 components*
-
-### Expense List Screen
-![Expense List](screenshots/expense_list.png)
-*Beautiful gradient cards with staggered animations, category-specific colors, and smooth transitions*
-
-### App Icon
-![App Icon](screenshots/app_icon.png)
-*Custom gradient app icon with expense tracking design, perfectly matching the app's theme*
+### Key Features Shown:
+- **Dashboard**: Purple-blue gradient theme with today's summary and quick action cards
+- **Add Expense**: Modern form with gradient button and Material Design 3 components  
+- **Expense List**: Beautiful gradient cards with staggered animations and category-specific colors
+- **App Icon**: Custom gradient design perfectly matching the app's expense tracking theme
 
 ## Technical Stack
 
