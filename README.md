@@ -81,22 +81,21 @@ This project was developed with extensive assistance from AI tools to accelerate
 
 ## Screenshots
 
-> **📸 Screenshots Coming Soon!**
-> 
-> To add screenshots to this README:
-> 1. Take screenshots of the app running on your device/emulator
-> 2. Save them in the `screenshots/` directory with these names:
->    - `dashboard.png` - Main dashboard screen
->    - `add_expense.png` - Add expense screen
->    - `expense_list.png` - Expense list with gradient cards
->    - `app_icon.png` - App icon on home screen
-> 3. The images will automatically appear in the README above
+### Dashboard Screen
+![Dashboard](screenshots/dashboard.png)
+*Main dashboard with today's summary and quick action cards featuring the beautiful purple-blue gradient theme*
 
-### Recommended Screenshots:
-- **Dashboard Screen**: Show the main dashboard with today's summary and quick action cards
-- **Add Expense Screen**: Display the expense entry form with gradient button and category selection
-- **Expense List Screen**: Capture the beautiful gradient cards with staggered animations
-- **App Icon**: Show the custom gradient app icon on the device home screen
+### Add Expense Screen
+![Add Expense](screenshots/add_expense.png)
+*Expense entry form with gradient button, category selection, and modern Material Design 3 components*
+
+### Expense List Screen
+![Expense List](screenshots/expense_list.png)
+*Beautiful gradient cards with staggered animations, category-specific colors, and smooth transitions*
+
+### App Icon
+![App Icon](screenshots/app_icon.png)
+*Custom gradient app icon with expense tracking design, perfectly matching the app's theme*
 
 ## Technical Stack
 
